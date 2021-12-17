@@ -3,6 +3,9 @@ import sys
 
 _logger = logging.getLogger(__name__)
 
+LOG_FORMAT = "[%(asctime)s] %(levelname)s:%(name)s: %(message)s"
+LOG_DATE_FORMAT = "%Y-%m-%d %H:%M:%S"
+
 
 def setup_logging(log_level: int):
     """
@@ -10,9 +13,8 @@ def setup_logging(log_level: int):
 
     :param log_level: minimum log level for emitting messages
     """
-    logformat = "[%(asctime)s] %(levelname)s:%(name)s: %(message)s"
     logging.basicConfig(
-        level=log_level, stream=sys.stdout, format=logformat, datefmt="%Y-%m-%d %H:%M:%S"
+        level=log_level, stream=sys.stdout, format=LOG_FORMAT, datefmt=LOG_DATE_FORMAT
     )
 
 
