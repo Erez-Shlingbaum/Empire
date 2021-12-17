@@ -8,7 +8,7 @@ based on the blogpost https://www.redblobgames.com/grids/hexagons/
 from math import sqrt
 
 
-class Hex(object):
+class Hex:
     """
     Hexagon map coordinate
     """
@@ -64,7 +64,7 @@ class Hex(object):
     
     def distance(self, other):
         return (self - other).length()
-    
+
     def neighbors(self):
         """
         :return: The hex tiles adjacent to this one
@@ -139,7 +139,7 @@ class Hex(object):
         ]
 
 
-class HexPlot(object):
+class HexPlot:
     """
     Convertion from hex logical coordinates to pixel coordinates
     """
@@ -149,6 +149,7 @@ class HexPlot(object):
         (sqrt(3) / 2.0, sqrt(3))
     )
 
+    # Pixel to hex convertion
     _FROM_PIXEL_MATRIX = (
         (2.0 / 3.0, 0),
         (-1.0 / 3.0, sqrt(3) / 3.0)
@@ -161,9 +162,6 @@ class HexPlot(object):
     def _matrix_multiply(matrix, point):
         """
         2x2 matrix multiplication
-
-        :param point: [description]
-        :type point: [type]
         """
         return (
             matrix[0][0] * point[0] + matrix[0][1] * point[1],
