@@ -1,9 +1,8 @@
 import logging
 import sys
 
-import pygame
-
 import empire
+import pygame
 
 _logger = logging.getLogger(__name__)
 
@@ -23,13 +22,18 @@ def setup_logging(log_level: int):
 
 
 def main(args):
-    setup_logging(logging.INFO)
-    _logger.info("Starting empire...")
+    pygame.init()
 
-    empire_game = empire.Game(empire.GameConfig('Empire', 700, 500, 60))
-    empire_game.run()
+    try:
+        setup_logging(logging.INFO)
+        _logger.info("Starting empire...")
+
+        empire_game = empire.Game(empire.GameConfig('Empire', 700, 500, 60))
+        empire_game.run()
+    finally:
+        pygame.display.quit()
+        pygame.quit()
 
 
 if __name__ == "__main__":
-    pygame.init()
     main(sys.argv[1:])
