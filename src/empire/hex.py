@@ -157,12 +157,10 @@ class HexPlot:
         (-1.0 / 3.0, sqrt(3) / 3.0)
     )
 
-    def __init__(self, height, width):
+    def __init__(self, height: int, width: int):
         """
         :param height: Pixel height of a hexagon
-        :type height: int
         :param width: Pixel width of a hexagon
-        :type width: int
         """
         self._height = height
         self._width = width
@@ -177,12 +175,11 @@ class HexPlot:
             matrix[1][0] * point[0] + matrix[1][1] * point[1]
         )
 
-    def to_pixel(self, hex):
+    def to_pixel(self, hexagon):
         """
         Convert Hexagonal coordinate to pixel coordinate
         """
-        # NOTE: this method shadows builtins.hex
-        result = self._matrix_multiply(self._TO_PIXEL_MATRIX, (hex.q, hex.r))
+        result = self._matrix_multiply(self._TO_PIXEL_MATRIX, (hexagon.q, hexagon.r))
         return (self._width * result[0], self._height * result[1])
 
     def from_pixel(self, x, y):
