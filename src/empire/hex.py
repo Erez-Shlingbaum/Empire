@@ -12,6 +12,7 @@ class Hex:
     """
     Hexagon map coordinate
     """
+
     def __init__(self, q, r, s=None):
         """
         Hexagon with cube / axial coordinates
@@ -34,13 +35,13 @@ class Hex:
 
     def __add__(self, other):
         return Hex(self.q + other.q, self.r + other.r)
-    
+
     def __sub__(self, other):
         return self + (-other)
 
     def __eq__(self, other):
         return self.q == other.q and self.r == other.r
-    
+
     def __hash__(self):
         return hash((self.q, self.r))
 
@@ -61,7 +62,7 @@ class Hex:
         :rtype: int
         """
         return sum(map(abs, (self.q, self.r, self.s))) // 2
-    
+
     def distance(self, other):
         return (self - other).length()
 
@@ -76,7 +77,7 @@ class Hex:
         ]
 
         return list(map(lambda direction: self + direction, _DIRECTIONS))
-    
+
     def round(self):
         """
         Round fractional hexagon to the nearest integer coordinate
@@ -99,7 +100,7 @@ class Hex:
             r = -q - s
         else:
             s = -q - r
-        
+
         return Hex(q, r, s)
 
     def line(self, target):
@@ -111,6 +112,7 @@ class Hex:
         :return: the hexagons between the source and the target
         :rtype: list[Hex]
         """
+
         # Define a point between 2 1-dimensional values
         def _linear_interpolate(start, end, portion):
             return start + (end - start) * portion
@@ -143,15 +145,15 @@ class Hex:
 #   this is representation logic
 class HexPlot:
     """
-    Convertion from hex logical coordinates to pixel coordinates
+    Conversion from hex logical coordinates to pixel coordinates
     """
-    # Flat top pixel convertion
+    # Flat top pixel conversion
     _TO_PIXEL_MATRIX = (
         (3.0 / 2.0, 0),
         (sqrt(3) / 2.0, sqrt(3))
     )
 
-    # Pixel to hex convertion
+    # Pixel to hex conversion
     _FROM_PIXEL_MATRIX = (
         (2.0 / 3.0, 0),
         (-1.0 / 3.0, sqrt(3) / 3.0)
@@ -180,7 +182,7 @@ class HexPlot:
         Convert Hexagonal coordinate to pixel coordinate
         """
         result = self._matrix_multiply(self._TO_PIXEL_MATRIX, (hexagon.q, hexagon.r))
-        return (self._width * result[0], self._height * result[1])
+        return self._width * result[0], self._height * result[1]
 
     def from_pixel(self, x, y):
         """
