@@ -111,7 +111,7 @@ class Hex:
         :return: the hexagons between the source and the target
         :rtype: list[Hex]
         """
-        # Define a point between 2 1-dimentional values
+        # Define a point between 2 1-dimensional values
         def _linear_interpolate(start, end, portion):
             return start + (end - start) * portion
 
@@ -139,6 +139,8 @@ class Hex:
         ]
 
 
+# TODO: Should this be seperated from this module?
+#   this is representation logic
 class HexPlot:
     """
     Convertion from hex logical coordinates to pixel coordinates
@@ -155,8 +157,13 @@ class HexPlot:
         (-1.0 / 3.0, sqrt(3) / 3.0)
     )
 
-    def __init__(self, size):
-        self._size = size
+    def __init__(self, height: int, width: int):
+        """
+        :param height: Pixel height of a hexagon
+        :param width: Pixel width of a hexagon
+        """
+        self._height = height
+        self._width = width
 
     @staticmethod
     def _matrix_multiply(matrix, point):
@@ -168,16 +175,16 @@ class HexPlot:
             matrix[1][0] * point[0] + matrix[1][1] * point[1]
         )
 
-    def to_pixel(self, hex):
+    def to_pixel(self, hexagon):
         """
         Convert Hexagonal coordinate to pixel coordinate
         """
-        result = self._matrix_multiply(self._TO_PIXEL_MATRIX, (hex.q, hex.r))
-        return (self._size * result[0], self._size * result[1])
+        result = self._matrix_multiply(self._TO_PIXEL_MATRIX, (hexagon.q, hexagon.r))
+        return (self._width * result[0], self._height * result[1])
 
     def from_pixel(self, x, y):
         """
         Convert pixel coordinate to hexagonal coordinate
         """
         result = self._matrix_multiply(self._FROM_PIXEL_MATRIX, (x, y))
-        return Hex(result[0] / self.size, result[1] / self.size).round()
+        return Hex(result[0] / self._width, result[1] / self._height).round()

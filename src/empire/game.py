@@ -40,15 +40,31 @@ class Game:
         # TODO: throw this example code away
         BLACK = (0, 0, 0)
         WHITE = (255, 255, 255)
-        GREEN = (0, 255, 0)
-        RED = (255, 0, 0)
 
-        # Clear screen
-        self.screen.fill(WHITE)
+        self.screen.fill(BLACK)
 
-        pygame.draw.rect(self.screen, RED, [55, 200, 100, 70], 0)
-        pygame.draw.line(self.screen, GREEN, [0, 0], [100, 100], 5)
-        pygame.draw.ellipse(self.screen, BLACK, [20, 20, 250, 100], 2)
+        from hex import Hex, HexPlot
+        plotter = HexPlot(40, 40)
+
+        hexes = [Hex(0, 0)]
+        hexes += hexes[0].neighbors()
+
+        def _draw_hex(hex):
+            from math import pi, sin, cos
+            center = plotter.to_pixel(hex)
+            center = (center[0] + 250, center[1] + 250)
+            verticies = []
+            for i in range(6):
+                angle = (60 * i) * (pi / 180)
+                verticies.append((
+                    center[0] + 40 * cos(angle),
+                    center[1] + 40 * sin(angle)
+                ))
+
+            pygame.draw.polygon(self.screen, WHITE, verticies, width = 2)
+
+        for hex in hexes:
+            _draw_hex(hex)
 
         # Update screen with what we've drawn
         pygame.display.flip()
