@@ -1,8 +1,9 @@
 import logging
 import sys
 
-import empire
 import pygame
+
+import empire
 
 _logger = logging.getLogger(__name__)
 
@@ -28,8 +29,9 @@ def main(args):
         setup_logging(logging.INFO)
         _logger.info("Starting empire...")
 
-        empire_game = empire.Game(empire.GameConfig('Empire', 700, 500, 60))
+        empire_game = empire.Game(empire.GameConfig('Empire', 1500, 900, 60))
         empire_game.run()
+        _logger.info("Ending empire...")
     finally:
         pygame.display.quit()
         pygame.quit()

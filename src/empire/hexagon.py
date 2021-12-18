@@ -8,7 +8,7 @@ based on the blogpost https://www.redblobgames.com/grids/hexagons/
 from math import sqrt
 
 
-class Hex:
+class Hexagon:
     """
     Hexagon map coordinate
     """
@@ -31,10 +31,10 @@ class Hex:
         self.s = s
 
     def __neg__(self):
-        return Hex(-self.q, -self.r)
+        return Hexagon(-self.q, -self.r)
 
     def __add__(self, other):
-        return Hex(self.q + other.q, self.r + other.r)
+        return Hexagon(self.q + other.q, self.r + other.r)
 
     def __sub__(self, other):
         return self + (-other)
@@ -52,9 +52,9 @@ class Hex:
         :param scalar: Scaling value
         :type scalar: int / float
         :return: Scaled coordinate
-        :rtype: Hex
+        :rtype: Hexagon
         """
-        return Hex(self.q * scalar, self.r * scalar)
+        return Hexagon(self.q * scalar, self.r * scalar)
 
     def length(self):
         """
@@ -69,11 +69,11 @@ class Hex:
     def neighbors(self):
         """
         :return: The hex tiles adjacent to this one
-        :rtype: list[Hex]
+        :rtype: list[Hexagon]
         """
         _DIRECTIONS = [
-            Hex(0, -1), Hex(+1, -1), Hex(+1, 0),
-            Hex(0, +1), Hex(-1, +1), Hex(-1, 0),
+            Hexagon(0, -1), Hexagon(+1, -1), Hexagon(+1, 0),
+            Hexagon(0, +1), Hexagon(-1, +1), Hexagon(-1, 0),
         ]
 
         return list(map(lambda direction: self + direction, _DIRECTIONS))
@@ -83,7 +83,7 @@ class Hex:
         Round fractional hexagon to the nearest integer coordinate
 
         :return: The nearest integer hex coordinate
-        :rtype: Hex
+        :rtype: Hexagon
         """
         q = round(self.q)
         r = round(self.r)
@@ -101,16 +101,16 @@ class Hex:
         else:
             s = -q - r
 
-        return Hex(q, r, s)
+        return Hexagon(q, r, s)
 
     def line(self, target):
         """
         Get the hexagons on the line between a source and a target hexagon
 
         :param target: The target hexagon to reach
-        :type target: Hex
+        :type target: Hexagon
         :return: the hexagons between the source and the target
-        :rtype: list[Hex]
+        :rtype: list[Hexagon]
         """
 
         # Define a point between 2 1-dimensional values
@@ -118,16 +118,16 @@ class Hex:
             return start + (end - start) * portion
 
         def _hex_interpolate(start, end, portion):
-            return Hex(
+            return Hexagon(
                 _linear_interpolate(start.q, end.q, portion),
                 _linear_interpolate(start.r, end.r, portion),
                 _linear_interpolate(start.s, end.s, portion),
             )
 
         # NOTE: for making rounding rules more deterministic,
-        #   use an epsilon value for nuding hexes
+        #   use an epsilon value for nudging hexes
         _NUDGE_VALUE = 1e-06
-        _NUDGE = Hex(_NUDGE_VALUE, _NUDGE_VALUE)
+        _NUDGE = Hexagon(_NUDGE_VALUE, _NUDGE_VALUE)
 
         distance = self.distance(target)
 
@@ -141,7 +141,7 @@ class Hex:
         ]
 
 
-# TODO: Should this be seperated from this module?
+# TODO: Should this be separated from this module?
 #   this is representation logic
 class HexPlot:
     """
@@ -177,7 +177,7 @@ class HexPlot:
             matrix[1][0] * point[0] + matrix[1][1] * point[1]
         )
 
-    def to_pixel(self, hexagon):
+    def to_pixel(self, hexagon: 'Hexagon'):
         """
         Convert Hexagonal coordinate to pixel coordinate
         """
@@ -189,4 +189,4 @@ class HexPlot:
         Convert pixel coordinate to hexagonal coordinate
         """
         result = self._matrix_multiply(self._FROM_PIXEL_MATRIX, (x, y))
-        return Hex(result[0] / self._width, result[1] / self._height).round()
+        return Hexagon(result[0] / self._width, result[1] / self._height).round()
