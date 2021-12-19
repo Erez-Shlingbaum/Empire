@@ -1,6 +1,5 @@
 import logging
 import sys
-from typing import List
 
 import pygame
 
@@ -23,7 +22,7 @@ def setup_logging(log_level: int):
     )
 
 
-def main(args: List[str]):
+def main():
     pygame.init()
 
     try:
@@ -39,4 +38,4 @@ def main(args: List[str]):
 
 
 if __name__ == "__main__":
-    main(sys.argv[1:])
+    main()

@@ -6,7 +6,8 @@ Separating the serviced class from knowing how or where a service is implemented
 """
 
 import config
+from empire import consts
 
 
 def get_game_config() -> config.GameConfig:
-    return config.GameConfig('Empire', 1500, 900, 60)
+    return config.GameConfig(consts.GAME_TITLE, consts.WINDOW_WIDTH, consts.WINDOW_HEIGHT, consts.FPS)
