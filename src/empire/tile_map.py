@@ -4,9 +4,11 @@ from typing import List
 from pygame.sprite import Sprite
 from pygame.surface import Surface
 
+import consts
 from hexagon import Hexagon, HexPlot
 
-HEX_WIDTH, HEX_HEIGHT = 40, 40
+# TODO: make sure this is synchronized with image size of hex tile
+HEX_WIDTH, HEX_HEIGHT = 64, 64
 
 _hexagon_plotter = HexPlot(HEX_WIDTH, HEX_HEIGHT)
 
@@ -15,9 +17,6 @@ class TileType(enum.IntEnum):
     Grass = 1
     Water = 2
 
-
-# TODO: have dict from tile type to tile data (image)
-# Possibly create the images from a sprite sheet
 
 class Tile(Sprite):
     def __init__(self, hexagon: Hexagon, tile_type: TileType, image: Surface):
@@ -41,21 +40,20 @@ class TileMap:
         self.tiles = tiles
 
         self.map_surface = Surface((self.width, self.height))
-        # TODO: put in const or get as parameter?
-        self.map_surface.set_colorkey((0, 0, 0))
+        self.map_surface.set_colorkey(consts.DEFAULT_COLOR_KEY)
 
-        # TODO: seems to work. interesting
+        # Draw once as the tile map does not change frequently
+        self.redraw_map_surface()
+
+    def redraw_map_surface(self):
+        self.map_surface.fill(consts.WHITE)
         for tile in self.tiles:
             tile.draw(self.map_surface)
 
     def draw(self, surface: Surface):
-        # for tile in self.tiles:
-        #     tile.draw(self.map_surface)
-        # TODO: decide what to do with map_surface.
-        # Should we blit directly to screen surface each time?
-        # Or possibly blit only once to self.map_surface and use it each frane
-        surface.blit(self.map_surface, (150, 0))
+        surface.blit(self.map_surface, (0, 0))
 
 
-def load_tile_map(path: str):
+def load_tile_map(path: str) -> TileMap:
+    # TODO
     pass

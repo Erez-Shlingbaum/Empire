@@ -1,9 +1,10 @@
 import logging
 import sys
+from typing import List
 
 import pygame
 
-import empire
+import game
 
 _logger = logging.getLogger(__name__)
 
@@ -22,14 +23,14 @@ def setup_logging(log_level: int):
     )
 
 
-def main(args):
+def main(args: List[str]):
     pygame.init()
 
     try:
         setup_logging(logging.INFO)
         _logger.info("Starting empire...")
 
-        empire_game = empire.Game(empire.GameConfig('Empire', 1500, 900, 60))
+        empire_game = game.Game()
         empire_game.run()
         _logger.info("Ending empire...")
     finally:
