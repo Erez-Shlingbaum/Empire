@@ -2,9 +2,9 @@ import logging
 
 import pygame
 
+import consts
 import service_locator
-from consts import WHITE
-from world import World
+import world
 
 _logger = logging.getLogger(__name__)
 
@@ -16,7 +16,7 @@ class Game:
         self.screen = pygame.display.set_mode((self.config.window_width, self.config.window_height))
         pygame.display.set_caption(self.config.title)
         self.clock = pygame.time.Clock()
-        self.world = World()
+        self.world = world.World()
 
     def run(self):
         CONVERT_TO_MS = 1000.0
@@ -37,6 +37,6 @@ class Game:
         self.world.update(delta_time_ms)
 
     def render(self):
-        self.screen.fill(WHITE)
+        self.screen.fill(consts.WHITE)
         self.world.draw(self.screen)
         pygame.display.flip()

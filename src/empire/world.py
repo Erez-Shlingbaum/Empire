@@ -23,7 +23,7 @@ class World:
             Tile(x, TileType.Grass, random.choice([grass_image, water_image])) for x in hexagons
         ])
 
-    def update(self, delta_time_ms):
+    def update(self, delta_time_ms: float):
         pass
 
     def draw(self, surface: Surface):

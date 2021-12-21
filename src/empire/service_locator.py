@@ -6,7 +6,7 @@ Separating the serviced class from knowing how or where a service is implemented
 """
 
 import config
-from empire import consts
+import consts
 
 
 def get_game_config() -> config.GameConfig:

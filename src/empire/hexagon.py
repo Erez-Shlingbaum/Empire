@@ -5,7 +5,7 @@ based on the blogpost https://www.redblobgames.com/grids/hexagons/
 """
 # TODO: Evaluate this class for performance, consider using numpy vectors for coordinates, etc
 
-from math import sqrt
+import math
 
 
 class Hexagon:
@@ -150,13 +150,13 @@ class HexPlot:
     # Flat top pixel conversion
     _TO_PIXEL_MATRIX = (
         (3.0 / 2.0, 0),
-        (sqrt(3) / 2.0, sqrt(3))
+        (math.sqrt(3) / 2.0, math.sqrt(3))
     )
 
     # Pixel to hex conversion
     _FROM_PIXEL_MATRIX = (
         (2.0 / 3.0, 0),
-        (-1.0 / 3.0, sqrt(3) / 3.0)
+        (-1.0 / 3.0, math.sqrt(3) / 3.0)
     )
 
     def __init__(self, height: int, width: int):
