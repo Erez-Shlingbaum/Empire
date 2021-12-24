@@ -7,8 +7,10 @@ from pygame.surface import Surface
 import consts
 from hexagon import Hexagon, HexPlot
 
-# TODO: make sure this is synchronized with image size of hex tile
-HEX_WIDTH, HEX_HEIGHT = 64, 64
+# TODO: For now this is just magic,
+#   work on realising how to set it properly
+#   Also note that the hex images are not a perfect hexagon yet
+HEX_WIDTH, HEX_HEIGHT = 63, 74
 
 _hexagon_plotter = HexPlot(HEX_WIDTH, HEX_HEIGHT)
 
