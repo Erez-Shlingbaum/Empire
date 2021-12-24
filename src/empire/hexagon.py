@@ -159,13 +159,13 @@ class HexPlot:
         (-1.0 / 3.0, math.sqrt(3) / 3.0)
     )
 
-    def __init__(self, height: int, width: int):
+    def __init__(self, width: int, height: int):
         """
-        :param height: Pixel height of a hexagon
         :param width: Pixel width of a hexagon
+        :param height: Pixel height of a hexagon
         """
-        self._height = height
         self._width = width
+        self._height = height
 
     @staticmethod
     def _matrix_multiply(matrix, point):
