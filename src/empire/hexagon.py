@@ -40,7 +40,7 @@ class Hexagon:
         return self + (-other)
 
     def __eq__(self, other):
-        return self.q == other.q and self.r == other.r
+        return self.q == other.q and self.r == other.r and self.s == other.s
 
     def __hash__(self):
         return hash((self.q, self.r))
