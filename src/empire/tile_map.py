@@ -10,9 +10,10 @@ from hexagon import Hexagon, HexPlot
 # TODO: For now this is just magic,
 #   work on realising how to set it properly
 #   Also note that the hex images are not a perfect hexagon yet
-HEX_WIDTH, HEX_HEIGHT = 63, 74
+# HEX_WIDTH, HEX_HEIGHT = 63, 73
+HEX_WIDTH, HEX_HEIGHT = 128, 128
 
-_hexagon_plotter = HexPlot(HEX_WIDTH, HEX_HEIGHT)
+_hexagon_plotter = HexPlot(HEX_WIDTH * 2, HEX_HEIGHT * 2)
 
 
 class TileType(enum.IntEnum):
@@ -53,6 +54,7 @@ class TileMap:
             tile.draw(self.map_surface)
 
     def draw(self, surface: Surface):
+        self.redraw_map_surface()
         surface.blit(self.map_surface, (0, 0))
 
 

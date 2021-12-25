@@ -149,7 +149,7 @@ class HexPlot:
     """
     # Flat top pixel conversion
     _TO_PIXEL_MATRIX = (
-        (3.0 / 2.0, 0),
+        (3.0 / 2.0, 0.0),
         (math.sqrt(3) / 2.0, math.sqrt(3))
     )
 
