@@ -30,20 +30,10 @@
 |
 
 =======
-empire
+Empire!
 =======
 
 
-    Add a short description here!
 
 
-A longer description of your project goes here...
-
-
-.. _pyscaffold-notes:
-
-Note
-====
-
-This project has been set up using PyScaffold 4.1.1. For details and usage
-information on PyScaffold see https://pyscaffold.org/.
+A 4x game where you can build your empire! Indeed, you can build a big empire and fight wars with other empires
