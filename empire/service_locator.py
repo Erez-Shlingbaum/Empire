@@ -11,4 +11,4 @@ from config import GameConfig
 
 def get_game_config() -> GameConfig:
     return GameConfig(consts.GAME_TITLE, consts.WINDOW_WIDTH, consts.WINDOW_HEIGHT, consts.FPS,
-                      consts.FULLSCREEN)
+                      consts.FULL_SCREEN)

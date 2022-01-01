@@ -17,7 +17,7 @@ class World:
         water_image = pyglet.image.load(consts.WATER_IMAGE_PATH)
 
         # TODO: refactor this to load from a map generator or from a file
-        hexagons = [Hexagon(r, q) for r in range(10) for q in range(10)]
+        hexagons = [Hexagon(r, q) for r in range(15) for q in range(-5, 10)]
         self.tile_map = TileMap(self.config.window_width, self.config.window_height, [
             Tile(random.choice([grass_image, water_image]), TileType.Grass, x) for x in hexagons
         ])

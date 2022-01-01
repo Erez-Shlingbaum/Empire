@@ -1,3 +1,5 @@
+import pyglet
+
 # Colors
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
@@ -8,10 +10,12 @@ GRASS_IMAGE_PATH = 'resources/grass.png'
 
 # Game config
 GAME_TITLE = 'Empire'
-WINDOW_WIDTH = None  # 1500
-WINDOW_HEIGHT = None  # 800
+
+_screen = pyglet.canvas.Display().get_default_screen()
+WINDOW_WIDTH = _screen.width  # 1500
+WINDOW_HEIGHT = _screen.height  # 800
 FPS = 60
-FULLSCREEN = True
+FULL_SCREEN = True
 
 # Other
 DEFAULT_COLOR_KEY = WHITE
