@@ -40,10 +40,13 @@ class Hexagon:
         return self + (-other)
 
     def __eq__(self, other):
-        return self.q == other.q and self.r == other.r
+        return self.q == other.q and self.r == other.r and self.s == other.s
 
     def __hash__(self):
         return hash((self.q, self.r))
+
+    def __repr__(self):
+        return "{classname}({q}, {r})".format(classname=self.__class__.__name__, q=self.q, r=self.r)
 
     def scale(self, scalar):
         """
