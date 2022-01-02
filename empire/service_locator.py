@@ -5,9 +5,10 @@ As more services will be added, this module will be responsible for locating the
 Separating the serviced class from knowing how or where a service is implemented
 """
 
-import config
 import consts
+from config import GameConfig
 
 
-def get_game_config() -> config.GameConfig:
-    return config.GameConfig(consts.GAME_TITLE, consts.WINDOW_WIDTH, consts.WINDOW_HEIGHT, consts.FPS)
+def get_game_config() -> GameConfig:
+    return GameConfig(consts.GAME_TITLE, consts.WINDOW_WIDTH, consts.WINDOW_HEIGHT, consts.FPS,
+                      consts.FULL_SCREEN)

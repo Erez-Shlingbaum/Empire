@@ -7,3 +7,4 @@ class GameConfig:
     window_width: int
     window_height: int
     fps: int
+    fullscreen: bool
