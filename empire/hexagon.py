@@ -45,6 +45,9 @@ class Hexagon:
     def __hash__(self):
         return hash((self.q, self.r))
 
+    def __repr__(self):
+        return "{classname}({q}, {r})".format(classname=self.__class__.__name__, q=self.q, r=self.r)
+
     def scale(self, scalar):
         """
         Scale coordinates by some factor
