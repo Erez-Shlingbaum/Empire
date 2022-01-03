@@ -34,4 +34,4 @@ jobs:
     - name: Run pytest
       run: |
         pipenv install
-        pipenv run pytest tests/
+        pipenv run env PYTHONPATH='./empire' pytest tests/
