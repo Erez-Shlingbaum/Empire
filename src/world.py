@@ -4,6 +4,7 @@ import pyglet
 
 import consts
 import service_locator
+
 from hexagon import Hexagon
 from tile_map import TileMap, TileType, Tile
 

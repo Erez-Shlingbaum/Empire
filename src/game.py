@@ -3,7 +3,7 @@ import logging
 import pyglet
 
 import world
-from empire.config import GameConfig
+from config import GameConfig
 
 _logger = logging.getLogger(__name__)
 

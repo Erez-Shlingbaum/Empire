@@ -5,8 +5,8 @@ BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
 
 # Images
-WATER_IMAGE_PATH = 'resources/water.png'
-GRASS_IMAGE_PATH = 'resources/grass.png'
+WATER_IMAGE_PATH = 'assets/water.png'
+GRASS_IMAGE_PATH = 'assets/grass.png'
 
 # Game config
 GAME_TITLE = 'Empire'
