@@ -7,18 +7,15 @@
             "label": "build",
             "type": "shell",
             "group": "build",
-            "command": "pipenv run main.py",
-            "options": {
-                "cwd": "empire"
-            }
+            "command": "pipenv run python src\\main.py",
         },
         {
             "label": "test",
             "type": "shell",
             "group": "test",
-            "command": "pipenv run python -m pytest ../tests",
+            "command": "pipenv run python -m pytest ..\\tests",
             "options": {
-                "cwd": "empire"
+                "cwd": "src"
             }
         },
     ]

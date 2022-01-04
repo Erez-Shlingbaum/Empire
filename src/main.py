@@ -5,7 +5,7 @@ import pyglet
 
 import consts
 import game
-from empire import service_locator
+import service_locator
 
 _logger = logging.getLogger(__name__)
 
