@@ -13,7 +13,6 @@ class Game(pyglet.window.Window):
     def __init__(self, config: GameConfig, *args, **kwargs):
         super().__init__(caption=config.title, width=config.window_width, height=config.window_height,
                          fullscreen=config.fullscreen, *args, **kwargs)
-        self.is_game_done = False
         self.world = world.World()
         self.fps_display = pyglet.window.FPSDisplay(self)
         self.keys = pyglet.window.key.KeyStateHandler()

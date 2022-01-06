@@ -6,9 +6,15 @@ Separating the serviced class from knowing how or where a service is implemented
 """
 
 import consts
+import input_system
 from config import GameConfig
 
 
 def get_game_config() -> GameConfig:
     return GameConfig(consts.GAME_TITLE, consts.WINDOW_WIDTH, consts.WINDOW_HEIGHT, consts.FPS,
                       consts.FULL_SCREEN)
+
+
+# TODO: Finish this
+def get_key_map() -> input_system.InputType:
+    return input_system.keyboard_mouse_input
