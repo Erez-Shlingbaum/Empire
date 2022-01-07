@@ -31,7 +31,7 @@ jobs:
           pipenv run env PYTHONPATH='./src' pytest tests/
       - name: Create binary executable file
         run: |
-          pipenv run pyinstaller --onefile ./src./main.py
+          pipenv run pyinstaller --onefile ./src/main.py
           cp -r ./assets ./dist/
       - uses: actions/upload-artifact@v2
         with:
