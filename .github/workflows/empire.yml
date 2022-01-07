@@ -52,9 +52,10 @@ jobs:
           pipenv run pip install pyinstaller
           pipenv install --skip-lock
       - name: Create windows binary
+        shell: pwsh
         run: |
           pipenv run pyinstaller --onefile ./src/main.py
-          robocopy ./assets ./dist/ /s
+          Copy-Item -Recurse ./assets ./dist/
       - uses: actions/upload-artifact@v2
         with:
           name: Empire-windows
