@@ -6,9 +6,11 @@ Separating the serviced class from knowing how or where a service is implemented
 """
 
 import consts
-from config import GameConfig
 
+# TODO: Evaluate the need for config dataclass
 
-def get_game_config() -> GameConfig:
-    return GameConfig(consts.GAME_TITLE, consts.WINDOW_WIDTH, consts.WINDOW_HEIGHT, consts.FPS,
-                      consts.FULL_SCREEN)
+# from config import GameConfig
+
+# def get_game_config() -> GameConfig:
+#     return GameConfig(consts.GAME_TITLE, consts.WINDOW_WIDTH, consts.WINDOW_HEIGHT, consts.FPS,
+#                       consts.FULL_SCREEN)

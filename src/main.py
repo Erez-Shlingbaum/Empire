@@ -2,9 +2,9 @@ import logging
 import sys
 
 import pyglet
+import glooey
 
 import consts
-import game
 import service_locator
 
 _logger = logging.getLogger(__name__)
@@ -26,11 +26,32 @@ def setup_logging(log_level: int):
 
 def main():
     setup_logging(logging.INFO)
+
     _logger.info("Starting empire...")
 
-    empire_game = game.Game(service_locator.get_game_config())
-    pyglet.clock.schedule_interval(empire_game.update, 1 / consts.FPS)
+    # empire_game = game_window.Game(**consts.DEFAULT_WINDOW_CONFIG)
+    # pyglet.clock.schedule_interval(empire_game.update, 1 / consts.FPS)
+
+    # Setup pyglet resource directory
+    pyglet.resource.path = ["../assets"]
+    pyglet.resource.reindex()
+
+    window = pyglet.window.Window(fullscreen=False)
+    gui = glooey.Gui(window)
+
+    deck = glooey.Deck("main_menu")
+    gui.add(deck)
+
+    from main_menu import MainMenu
+    from game_screen import GameScreen
+    main_menu = MainMenu(deck)
+    gameplay = GameScreen()
+
+    deck.add_state("main_menu", main_menu)
+    deck.add_state("gameplay", gameplay)
+
     pyglet.app.run()
+
     _logger.info("Ending empire...")
 
 
