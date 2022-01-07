@@ -56,6 +56,6 @@ jobs:
           pipenv run pyinstaller --onefile ./src/main.py
           robocopy ./assets ./dist/ /s
       - uses: actions/upload-artifact@v2
-          with:
-            name: Empire-windows
-            path: ./dist
+        with:
+          name: Empire-windows
+          path: ./dist
