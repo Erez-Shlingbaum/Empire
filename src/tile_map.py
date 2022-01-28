@@ -38,7 +38,7 @@ class TileMap(pyglet.graphics.Batch):
 
     @property
     def tiles(self):
-        return self.tiles
+        return self._tiles
 
 
 def load_tile_map(path: str) -> TileMap:
