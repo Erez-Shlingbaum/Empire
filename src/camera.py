@@ -4,31 +4,56 @@ import pyglet.gl
 
 
 class Camera:
+    """
+    2D camera implementation that supports zoom / scroll operations open current Gl matrix transformation
+    """
     DEFAULT_MIN_ZOOM = 0.5
     DEFAULT_MAX_ZOOM = 1.5
 
     def __init__(self, min_zoom=DEFAULT_MIN_ZOOM, max_zoom=DEFAULT_MAX_ZOOM):
-        self.zoom_level = 1.0
+        assert 0 < min_zoom <= max_zoom
+        self._zoom_level = 1.0
         self.min_zoom = min_zoom
         self.max_zoom = max_zoom
         self.translation_vector = [0, 0, 0]
 
-    def zoom(self, amount: float):
-        if self.min_zoom <= self.zoom_level + amount <= self.max_zoom:
-            self.zoom_level += amount
+    @property
+    def zoom_level(self):
+        return self._zoom_level
+
+    @zoom_level.setter
+    def zoom_level(self, value):
+        self._zoom_level = max(min(value, self.max_zoom), self.min_zoom)
+
+    @property
+    def position(self):
+        return self.translation_vector[0], self.translation_vector[1]
+
+    @position.setter
+    def position(self, value):
+        assert len(value) == 2
+        self.translation_vector = (*value, 0)
 
     # TODO: consider adding checks for out of bounds scroll
-    # It also make sense for me to check if in world class
+    #  It also make sense for me to check if in world class
     def scroll(self, delta_x: float, delta_y: float):
         self.translation_vector[0] += delta_x
         self.translation_vector[1] += delta_y
 
+    def begin_transform(self):
+        pyglet.gl.glTranslatef(-self.translation_vector[0] * self._zoom_level,
+                               -self.translation_vector[1] * self._zoom_level, 0)
+        pyglet.gl.glScalef(self._zoom_level, self._zoom_level, 1)
+
+    def end_transform(self):
+        pyglet.gl.glScalef(1 / self._zoom_level, 1 / self._zoom_level, 1)
+        pyglet.gl.glTranslatef(self.translation_vector[0] * self._zoom_level,
+                               self.translation_vector[1] * self._zoom_level, 0)
+
     @contextlib.contextmanager
     def camera_transformation(self):
-        pyglet.gl.glPushMatrix()
+        self.begin_transform()
         try:
-            pyglet.gl.glOrtho(-self.zoom_level, self.zoom_level, -self.zoom_level, self.zoom_level, -1, 1)
-            pyglet.gl.glTranslatef(*self.translation_vector)
             yield
         finally:
-            pyglet.gl.glPopMatrix()
+            self.end_transform()
