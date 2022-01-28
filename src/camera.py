@@ -4,12 +4,14 @@ import pyglet.gl
 
 
 class Camera:
-    """2D camera implementation that supports zoom / scroll operations open current Gl matrix transformation"""
+    """
+    2D camera implementation that supports zoom / scroll operations open current Gl matrix transformation
+    """
     DEFAULT_MIN_ZOOM = 0.5
     DEFAULT_MAX_ZOOM = 1.5
 
     def __init__(self, min_zoom=DEFAULT_MIN_ZOOM, max_zoom=DEFAULT_MAX_ZOOM):
-        assert 0 < min_zoom <= max_zoom, "Minimum zoom must not be greater than maximum zoom"
+        assert 0 < min_zoom <= max_zoom
         self._zoom_level = 1.0
         self.min_zoom = min_zoom
         self.max_zoom = max_zoom
@@ -25,12 +27,10 @@ class Camera:
 
     @property
     def position(self):
-        """Query the current offset."""
         return self.translation_vector[0], self.translation_vector[1]
 
     @position.setter
     def position(self, value):
-        """Set the scroll offset directly."""
         assert len(value) == 2
         self.translation_vector = (*value, 0)
 
