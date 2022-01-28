@@ -1,4 +1,5 @@
 import logging
+import math
 
 import pyglet
 
@@ -25,18 +26,18 @@ class Game(pyglet.window.Window):
 
     def on_mouse_scroll(self, x, y, scroll_x, scroll_y):
         # This is a good amount, not too much, not too little
-        self.camera.zoom(-0.03 if scroll_y > 0 else 0.03)
+        self.camera.zoom_level += math.copysign(0.03, scroll_y)
 
     def update(self, delta_time_ms: float):
         SCROLL_AMOUNT = 10
         if self.keys[pyglet.window.key.A]:
-            self.camera.scroll(SCROLL_AMOUNT, 0)
-        if self.keys[pyglet.window.key.W]:
-            self.camera.scroll(0, -SCROLL_AMOUNT)
-        if self.keys[pyglet.window.key.D]:
             self.camera.scroll(-SCROLL_AMOUNT, 0)
-        if self.keys[pyglet.window.key.S]:
+        if self.keys[pyglet.window.key.W]:
             self.camera.scroll(0, SCROLL_AMOUNT)
+        if self.keys[pyglet.window.key.D]:
+            self.camera.scroll(SCROLL_AMOUNT, 0)
+        if self.keys[pyglet.window.key.S]:
+            self.camera.scroll(0, -SCROLL_AMOUNT)
 
         self.world.update(delta_time_ms)
 
