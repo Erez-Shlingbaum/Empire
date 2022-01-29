@@ -31,6 +31,7 @@ class State(pyglet.event.EventDispatcher, metaclass=abc.ABCMeta):
 
 class Fsm:
     """
+    Finite state machine
     """
     def __init__(self, window):
         super().__init__()
@@ -59,7 +60,7 @@ class Fsm:
         return self._stack[-1]
 
     def __getattr__(self, name):
-        return self.top.__getattr__(name)
+        return getattr(self.top, name)
 
     def update(self, delta_ms):
         return self.top.update(delta_ms)
