@@ -6,6 +6,7 @@ import pyglet
 import camera
 import world
 from config import GameConfig
+from utils.opengl import get_opengl_projection_matrix, normalize_screen_coordinates
 
 _logger = logging.getLogger(__name__)
 
@@ -27,6 +28,13 @@ class Game(pyglet.window.Window):
     def on_mouse_scroll(self, x, y, scroll_x, scroll_y):
         # This is a good amount, not too much, not too little
         self.camera.zoom_level += math.copysign(0.03, scroll_y)
+
+    def on_mouse_press(self, x, y, button, modifiers):
+        # Note that camera transform operates on GL_MODELVIEW_MATRIX, which is an identity matrix except when we modify it using with camera.transform()
+        # Thus, the following method encapsulates both MODELVIEW_MATRIX and CAMERA_MATRIX
+        inverse_transform = ~(self.camera.get_transformation_matrix() @ get_opengl_projection_matrix())
+        *mouse, _, _ = inverse_transform @ pyglet.math.Vec4(*normalize_screen_coordinates(x, y), 1.0, 1.0)
+        print('Mouse position in world =', mouse)
 
     def update(self, delta_time_ms: float):
         SCROLL_AMOUNT = 10
