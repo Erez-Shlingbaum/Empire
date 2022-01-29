@@ -1,6 +1,7 @@
 import contextlib
 
 import pyglet.gl
+from pyglet.math import Vec3
 
 
 class Camera:
@@ -41,14 +42,28 @@ class Camera:
         self.translation_vector[1] += delta_y
 
     def begin_transform(self):
-        pyglet.gl.glTranslatef(-self.translation_vector[0] * self._zoom_level,
-                               -self.translation_vector[1] * self._zoom_level, 0)
-        pyglet.gl.glScalef(self._zoom_level, self._zoom_level, 1)
+        pyglet.gl.glTranslatef(*self._get_translation_transformation())
+        pyglet.gl.glScalef(*self._get_scale_transformation())
 
     def end_transform(self):
-        pyglet.gl.glScalef(1 / self._zoom_level, 1 / self._zoom_level, 1)
-        pyglet.gl.glTranslatef(self.translation_vector[0] * self._zoom_level,
-                               self.translation_vector[1] * self._zoom_level, 0)
+        pyglet.gl.glScalef(*self._get_reverse_scale_transformation())
+        pyglet.gl.glTranslatef(*self._get_reverse_translation_transformation())
+
+    def get_transformation_matrix(self):
+        return pyglet.math.Mat4.from_translation(self._get_translation_transformation()).scale(
+            *self._get_scale_transformation())
+
+    def _get_translation_transformation(self) -> Vec3:
+        return Vec3(-self.translation_vector[0] * self._zoom_level, -self.translation_vector[1] * self._zoom_level, 0.0)
+
+    def _get_reverse_translation_transformation(self) -> Vec3:
+        return Vec3(self.translation_vector[0] * self._zoom_level, self.translation_vector[1] * self._zoom_level, 0.0)
+
+    def _get_scale_transformation(self) -> Vec3:
+        return Vec3(self._zoom_level, self._zoom_level, 1.0)
+
+    def _get_reverse_scale_transformation(self) -> Vec3:
+        return Vec3(1.0 / self._zoom_level, 1.0 / self._zoom_level, 1.0)
 
     @contextlib.contextmanager
     def camera_transformation(self):
