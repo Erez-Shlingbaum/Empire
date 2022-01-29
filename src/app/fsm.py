@@ -28,9 +28,6 @@ class State(pyglet.event.EventDispatcher, metaclass=abc.ABCMeta):
     def draw(self):
         pass
 
-State.register_event_type("on_key_press")
-State.register_event_type("on_mouse_scroll")
-
 
 class Fsm:
     """
