@@ -3,8 +3,8 @@ import math
 import pyglet
 
 import app.fsm as fsm
-import world
-import camera
+import view.world as world
+import view.camera as camera
 
 from utils.opengl import get_opengl_projection_matrix, normalize_screen_coordinates
 

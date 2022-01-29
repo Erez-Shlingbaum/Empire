@@ -1,6 +1,6 @@
 import pyglet
 
-import consts
+import app.consts as consts
 import app.game as game
 
 

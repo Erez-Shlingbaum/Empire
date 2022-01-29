@@ -1,4 +1,4 @@
-from hexagon import Hexagon
+from model.hexagon import Hexagon
 
 
 def test_hex_arithmetic():
