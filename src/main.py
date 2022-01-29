@@ -5,7 +5,12 @@ import app.game as game
 
 
 def main():
-    game.Game(caption=consts.GAME_TITLE, fullscreen=False)
+    game.Game(
+        caption=consts.GAME_TITLE,
+        fullscreen=consts.FULL_SCREEN,
+        width=consts.WINDOW_WIDTH,
+        height=consts.WINDOW_HEIGHT
+    )
     pyglet.app.run()
 
 

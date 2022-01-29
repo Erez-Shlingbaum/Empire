@@ -25,7 +25,7 @@ class Gameplay(fsm.State):
         self.fsm.window.push_handlers(self.keys)
 
     def pop_handlers(self):
-        self.fsm.window.pop_handlers(self.keys)
+        self.fsm.window.pop_handlers()
 
     def update(self, delta_ms: float):
         SCROLL_AMOUNT = 10

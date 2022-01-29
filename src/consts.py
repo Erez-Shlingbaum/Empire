@@ -13,12 +13,17 @@ SPLASH_IMAGE_PATH = "assets/splash.png"
 # Game config
 GAME_TITLE = 'Empire'
 
-_screen = pyglet.canvas.Display().get_default_screen()
-WINDOW_WIDTH = _screen.width
-WINDOW_HEIGHT = _screen.height
-
 FPS = 120
-FULL_SCREEN = True
+FULL_SCREEN = False
+
+_screen = pyglet.canvas.Display().get_default_screen()
+
+if FULL_SCREEN:
+    WINDOW_WIDTH = _screen.width
+    WINDOW_HEIGHT = _screen.height
+else:
+    WINDOW_WIDTH = 640
+    WINDOW_HEIGHT = 480
 
 # Other
 DEFAULT_COLOR_KEY = WHITE
