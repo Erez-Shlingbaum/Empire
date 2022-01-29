@@ -3,7 +3,7 @@ from typing import List
 
 import pyglet
 
-from hexagon import Hexagon, HexPlot
+from model.hexagon import Hexagon, HexPlot
 
 # TODO: For now this is just magic,
 #   work on realising how to set it properly

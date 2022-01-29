@@ -2,7 +2,7 @@ import pyglet
 
 import app.fsm as fsm
 import app.splash_screen as splash_screen
-import consts
+import app.consts as consts
 
 class Game(pyglet.window.Window):
     """

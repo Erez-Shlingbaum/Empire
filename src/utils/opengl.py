@@ -3,7 +3,7 @@ from typing import Tuple
 import pyglet
 from pyglet.math import Mat4
 
-import consts
+import app.consts as consts
 
 
 def normalize_screen_coordinates(x, y, screen_width=consts.WINDOW_WIDTH, screen_height=consts.WINDOW_HEIGHT) \

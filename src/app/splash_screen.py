@@ -1,6 +1,6 @@
 import app.fsm as fsm
 import app.gameplay as gameplay
-import consts
+import app.consts as consts
 
 import pyglet
 

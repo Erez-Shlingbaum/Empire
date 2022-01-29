@@ -2,10 +2,10 @@ import random
 
 import pyglet
 
-import consts
+import app.consts as consts
 
-from hexagon import Hexagon
-from tile_map import TileMap, TileType, Tile
+from model.hexagon import Hexagon
+from view.tile_map import TileMap, TileType, Tile
 
 
 class World:
