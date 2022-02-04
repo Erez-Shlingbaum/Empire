@@ -1,10 +1,8 @@
 """
 Finite state machine
 """
-from pyglet.window import Window
 
 from app.fsm_state import FsmState
-from app.game import Game
 
 
 class Fsm:
@@ -12,7 +10,7 @@ class Fsm:
     Finite state machine
     """
 
-    def __init__(self, window: Game):
+    def __init__(self, window):
         super().__init__()
         self._stack = []
 

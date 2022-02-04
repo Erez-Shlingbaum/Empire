@@ -5,7 +5,6 @@ import pyglet
 import app.fsm_state
 import view.camera as camera
 import view.world as world
-from app.fsm import Fsm
 from utils.opengl import get_opengl_projection_matrix, normalize_screen_coordinates
 
 
@@ -14,7 +13,7 @@ class Gameplay(app.fsm_state.FsmState):
     The game state in which the game is played
     """
 
-    def __init__(self, fsm: Fsm):
+    def __init__(self, fsm):
         super().__init__(fsm)
 
         self.world = world.World()

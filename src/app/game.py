@@ -1,8 +1,8 @@
 import pyglet
 
 import app.consts as consts
-import app.fsm as fsm
 import app.splash_screen as splash_screen
+from app.fsm import Fsm
 
 
 class Game(pyglet.window.Window):
@@ -13,7 +13,7 @@ class Game(pyglet.window.Window):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-        self.fsm = fsm.Fsm(self)
+        self.fsm = Fsm(self)
         splash_state = splash_screen.SplashScreen(self.fsm, consts.SPLASH_DURATION_SEC)
         self.fsm.push(splash_state)
 

@@ -2,15 +2,13 @@ import abc
 
 import pyglet
 
-from app.fsm import Fsm
-
 
 class FsmState(pyglet.event.EventDispatcher, metaclass=abc.ABCMeta):
     """
     State in a finite state machine
     """
 
-    def __init__(self, fsm: Fsm):
+    def __init__(self, fsm):
         super().__init__()
         self.fsm = fsm
 
