@@ -19,7 +19,10 @@ def normalize_screen_coordinates(x, y, screen_width=consts.WINDOW_WIDTH, screen_
     return normalize(x / screen_width), normalize(y / screen_height)
 
 
-def get_opengl_projection_matrix() -> Mat4:
-    proj_matrix = (pyglet.gl.GLfloat * 16)()
-    pyglet.gl.glGetFloatv(pyglet.gl.GL_PROJECTION_MATRIX, proj_matrix)
-    return Mat4(proj_matrix)
+def get_opengl_matrix(matrix_type: int) -> Mat4:
+    """
+    :param matrix_type: e.g pyglet.gl.GL_PROJECTION_MATRIX, etc.
+    """
+    matrix = (pyglet.gl.GLfloat * 16)()
+    pyglet.gl.glGetFloatv(matrix_type, matrix)
+    return Mat4(matrix)
