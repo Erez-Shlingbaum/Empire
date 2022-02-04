@@ -2,18 +2,19 @@ import math
 
 import pyglet
 
-import app.fsm as fsm
-import view.world as world
+import app.fsm_state
 import view.camera as camera
-
+import view.world as world
+from app.fsm import Fsm
 from utils.opengl import get_opengl_projection_matrix, normalize_screen_coordinates
 
 
-class Gameplay(fsm.State):
+class Gameplay(app.fsm_state.FsmState):
     """
     The game state in which the game is played
     """
-    def __init__(self, fsm):
+
+    def __init__(self, fsm: Fsm):
         super().__init__(fsm)
 
         self.world = world.World()
@@ -54,10 +55,12 @@ class Gameplay(fsm.State):
         inverse_transform = ~(self.camera.get_transformation_matrix() @ get_opengl_projection_matrix())
         *mouse, _, _ = inverse_transform @ pyglet.math.Vec4(*normalize_screen_coordinates(x, y), 1.0, 1.0)
         print('Mouse position in world =', mouse)
+        return True
 
     def draw(self):
         with self.camera.camera_transformation():
             self.world.draw()
+
 
 Gameplay.register_event_type("on_key_press")
 Gameplay.register_event_type("on_mouse_scroll")

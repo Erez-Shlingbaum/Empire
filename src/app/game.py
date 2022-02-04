@@ -1,13 +1,15 @@
 import pyglet
 
+import app.consts as consts
 import app.fsm as fsm
 import app.splash_screen as splash_screen
-import app.consts as consts
+
 
 class Game(pyglet.window.Window):
     """
     The game main window
     """
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
