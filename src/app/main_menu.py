@@ -5,7 +5,7 @@ from gui.clickable_label import ClickableLabel
 
 
 class MainMenu(FsmState):
-    SHARED_LABEL_PROPERTIES = dict(font_size=36, anchor_x='center', anchor_y='center')
+    LABEL_PROPERTIES = dict(font_size=36, anchor_x='center', anchor_y='center')
 
     def __init__(self, fsm: Fsm):
         super().__init__(fsm)
@@ -14,18 +14,18 @@ class MainMenu(FsmState):
         vertical_offset = 100
 
         self._start_label = ClickableLabel(
-            'Start Game', **self.SHARED_LABEL_PROPERTIES,
+            'Start Game', **self.LABEL_PROPERTIES,
             x=screen_middle_x, y=screen_middle_y + vertical_offset
         )
 
         self._options_label = ClickableLabel(
-            'Options', **self.SHARED_LABEL_PROPERTIES,
+            'Options', **self.LABEL_PROPERTIES,
             x=screen_middle_x, y=screen_middle_y
 
         )
 
         self._exit_label = ClickableLabel(
-            'Exit', **self.SHARED_LABEL_PROPERTIES,
+            'Exit', **self.LABEL_PROPERTIES,
             x=screen_middle_x, y=screen_middle_y - vertical_offset
 
         )

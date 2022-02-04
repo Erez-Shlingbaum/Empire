@@ -2,13 +2,13 @@ import math
 
 import pyglet
 
-import app.fsm_state
 import view.camera as camera
 import view.world as world
+from app.fsm_state import FsmState
 from utils.opengl import get_opengl_projection_matrix, normalize_screen_coordinates
 
 
-class Gameplay(app.fsm_state.FsmState):
+class Gameplay(FsmState):
     """
     The game state in which the game is played
     """
