@@ -1,8 +1,6 @@
 import pyglet
 
 # Colors
-from pyglet.canvas.xlib import NoSuchDisplayException
-
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
 
@@ -18,10 +16,7 @@ GAME_TITLE = 'Empire'
 FPS = 120
 FULL_SCREEN = False
 
-try:
-    _screen = pyglet.canvas.Display().get_default_screen()
-except NoSuchDisplayException:
-    print('Warning: could not get default screen object. Ignoring this for CI purposes')
+_screen = pyglet.canvas.Display().get_default_screen()
 
 if FULL_SCREEN:
     WINDOW_WIDTH = _screen.width
