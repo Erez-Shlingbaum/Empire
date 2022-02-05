@@ -1,11 +1,11 @@
 import pyglet
 
 import app.consts as consts
-import app.game as game
+from app.game import Game
 
 
 def main():
-    game.Game(
+    Game(
         caption=consts.GAME_TITLE,
         fullscreen=consts.FULL_SCREEN,
         width=consts.WINDOW_WIDTH,

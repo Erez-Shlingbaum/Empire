@@ -1,47 +1,24 @@
 """
 Finite state machine
 """
-import abc
 
-import pyglet
-
-
-class State(pyglet.event.EventDispatcher, metaclass=abc.ABCMeta):
-    """
-    State in a finite state machine
-    """
-    def __init__(self, fsm):
-        super().__init__()
-        self.fsm = fsm
-
-    def push_handlers(self):
-        pass
-
-    def pop_handlers(self):
-        pass
-
-    @abc.abstractmethod
-    def update(self, delta_ms):
-        pass
-
-    @abc.abstractmethod
-    def draw(self):
-        pass
+from app.fsm_state import FsmState
 
 
 class Fsm:
     """
     Finite state machine
     """
+
     def __init__(self, window):
         super().__init__()
         self._stack = []
 
         self.window = window
 
-    def push(self, state):
-        if not isinstance(state, State):
-            raise TypeError(f"Only {State.__name__} type objects can be pushed into fsm")
+    def push(self, state: FsmState):
+        if not isinstance(state, FsmState):
+            raise TypeError(f"Only {FsmState.__name__} type objects can be pushed into fsm")
 
         self._stack.append(state)
         self.window.push_handlers(state)
@@ -59,10 +36,10 @@ class Fsm:
 
         return self._stack[-1]
 
-    def __getattr__(self, name):
+    def __getattr__(self, name: str):
         return getattr(self.top, name)
 
-    def update(self, delta_ms):
+    def update(self, delta_ms: float):
         return self.top.update(delta_ms)
 
     def draw(self):

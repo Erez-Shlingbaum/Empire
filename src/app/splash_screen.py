@@ -1,11 +1,11 @@
-import app.fsm as fsm
-import app.gameplay as gameplay
-import app.consts as consts
-
 import pyglet
 
+import app.consts as consts
+from app import main_menu
+from app.fsm_state import FsmState
 
-class SplashScreen(fsm.State):
+
+class SplashScreen(FsmState):
     def __init__(self, fsm, duration_sec):
         super().__init__(fsm)
 
@@ -22,12 +22,12 @@ class SplashScreen(fsm.State):
         )
 
     def _finish_splash(self):
-        gameplay_state = gameplay.Gameplay(self.fsm)
+        main_menu_state = main_menu.MainMenu(self.fsm)
 
         self.fsm.pop()
-        self.fsm.push(gameplay_state)
+        self.fsm.push(main_menu_state)
 
-    def update(self, delta_ms):
+    def update(self, delta_ms: float):
         self._duration_sec -= delta_ms
 
         if self._duration_sec < 0:
