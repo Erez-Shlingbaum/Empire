@@ -7,3 +7,8 @@
 ![closed-prs](https://img.shields.io/github/issues-pr-closed-raw/erez-shlingbaum/empire)
 
 4x game inspired from the civilization game series
+
+| Operating System | URL to latest build artifact                                                        |
+|------------------|-------------------------------------------------------------------------------------|
+| Linux            | https://nightly.link/Erez-Shlingbaum/Empire/workflows/empire/dev/Empire-linux.zip   |
+| Windows          | https://nightly.link/Erez-Shlingbaum/Empire/workflows/empire/dev/Empire-windows.zip |
