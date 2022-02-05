@@ -1,6 +1,7 @@
 import pyglet
 import pytest
 
+from utils.opengl import get_opengl_matrix
 from view.camera import Camera
 
 
@@ -23,8 +24,6 @@ def test_floating_point_error():
     This test fails if for enough camera operations on opengl's matrix, it starts to accumulate floating point error.
     Possible solution: Set opengl's matrix to identity each frame instead of using inverse transformations
     """
-    # Import this here, as this fail in CI
-    from utils.opengl import get_opengl_matrix
     MIN_ZOOM = 1
     MAX_ZOOM = 1000
 
