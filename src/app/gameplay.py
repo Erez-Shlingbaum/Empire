@@ -38,10 +38,9 @@ class Gameplay(FsmState):
         if self.keys[pyglet.window.key.S]:
             self.camera.scroll(0, -SCROLL_AMOUNT)
 
+        world_x, world_y = screen_to_world_coordinates(self.camera, self.fsm.window._mouse_x, self.fsm.window._mouse_y)
+        self.world.set_mouse_hexagon(world_x, world_y)
         self.world.update(delta_ms)
-        mouse = screen_to_world_coordinates(self.camera, self.fsm.window._mouse_x, self.fsm.window._mouse_y)
-        self.world.update_mouse_hexagon(*mouse)
-
 
     def on_key_press(self, symbol, modifiers):
         if symbol == pyglet.window.key.ESCAPE:
@@ -58,11 +57,6 @@ class Gameplay(FsmState):
         print('Mouse position in world =', mouse)
         return True
 
-    def on_mouse_motion(self, x, y, dx, dy):
-        current_x, current_y = x + dx, y + dy
-        mouse = screen_to_world_coordinates(self.camera, current_x, current_y)
-        self.world.update_mouse_hexagon(*mouse)
-
     def draw(self):
         with self.camera.camera_transformation():
             self.world.draw()
@@ -71,4 +65,3 @@ class Gameplay(FsmState):
 Gameplay.register_event_type("on_key_press")
 Gameplay.register_event_type("on_mouse_scroll")
 Gameplay.register_event_type("on_mouse_press")
-Gameplay.register_event_type("on_mouse_motion")

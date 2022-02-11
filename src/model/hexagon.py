@@ -5,7 +5,12 @@ based on the blogpost https://www.redblobgames.com/grids/hexagons/
 """
 # TODO: Evaluate this class for performance, consider using numpy vectors for coordinates, etc
 
-import math
+from math import sqrt
+
+from pyglet.math import Vec2
+
+from app import consts
+from utils.math import Mat2
 
 
 class Hexagon:
@@ -144,52 +149,26 @@ class Hexagon:
         ]
 
 
-# TODO: Should this be separated from this module?
-#   this is representation logic
-class HexPlot:
+# Flat top pixel conversion
+def to_pixel(hexagon: 'Hexagon', size: float = consts.HEX_SIZE) -> Vec2:
     """
-    Conversion from hex logical coordinates to pixel coordinates
+    Convert Hexagonal coordinate to pixel coordinate
     """
-    # Flat top pixel conversion
-    _TO_PIXEL_MATRIX = (
-        (3.0 / 2.0, 0),
-        (math.sqrt(3) / 2.0, math.sqrt(3))
+    _TO_PIXEL_MATRIX = Mat2(
+        (3.0 / 2.0, 0.0,
+         sqrt(3.0) / 2.0, sqrt(3.0))
     )
+    return (_TO_PIXEL_MATRIX @ Vec2(hexagon.q, hexagon.r)).scale(size)
 
-    # Pixel to hex conversion
-    _FROM_PIXEL_MATRIX = (
-        (2.0 / 3.0, 0),
-        (-1.0 / 3.0, math.sqrt(3) / 3.0)
+
+def from_pixel(x, y, size: float = consts.HEX_SIZE):
+    """
+    Convert pixel coordinate to hexagonal coordinate
+    """
+    _FROM_PIXEL_MATRIX = Mat2(
+        (2.0 / 3.0, 0.0,
+         -1.0 / 3.0, sqrt(3.0) / 3.0)
     )
-
-    def __init__(self, width: int, height: int):
-        """
-        :param width: Pixel width of a hexagon
-        :param height: Pixel height of a hexagon
-        """
-        self._width = width
-        self._height = height
-
-    @staticmethod
-    def _matrix_multiply(matrix, point):
-        """
-        2x2 matrix multiplication
-        """
-        return (
-            matrix[0][0] * point[0] + matrix[0][1] * point[1],
-            matrix[1][0] * point[0] + matrix[1][1] * point[1]
-        )
-
-    def to_pixel(self, hexagon: 'Hexagon'):
-        """
-        Convert Hexagonal coordinate to pixel coordinate
-        """
-        result = self._matrix_multiply(self._TO_PIXEL_MATRIX, (hexagon.q, hexagon.r))
-        return self._width * result[0], self._height * result[1]
-
-    def from_pixel(self, x, y):
-        """
-        Convert pixel coordinate to hexagonal coordinate
-        """
-        result = self._matrix_multiply(self._FROM_PIXEL_MATRIX, (x, y))
-        return Hexagon(result[0] / self._width, result[1] / self._height).round()
+    x, y = x - 64, y - 64
+    q, r = (_FROM_PIXEL_MATRIX @ Vec2(x, y)).scale(1.0 / size)
+    return Hexagon(q, r).round()

@@ -3,18 +3,14 @@ from typing import List
 
 import pyglet
 
-from model.hexagon import Hexagon, HexPlot
-
-# TODO: For now this is just magic,
-#   work on realising how to set it properly
-#   Also note that the hex images are not a perfect hexagon yet
-HEX_WIDTH, HEX_HEIGHT = 63, 74
-_hexagon_plotter = HexPlot(HEX_WIDTH, HEX_HEIGHT)
+import model
+from model.hexagon import Hexagon
 
 
 class TileType(enum.IntEnum):
     Grass = 1
     Water = 2
+    Outline = 3
 
 
 class Tile(pyglet.sprite.Sprite):
@@ -22,7 +18,7 @@ class Tile(pyglet.sprite.Sprite):
         super().__init__(image)
         self.hexagon = hexagon
         self.tile_type = tile_type
-        self.position = _hexagon_plotter.to_pixel(hexagon)
+        self.position = model.hexagon.to_pixel(hexagon)
 
 
 class TileMap(pyglet.graphics.Batch):
