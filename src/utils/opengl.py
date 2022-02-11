@@ -4,6 +4,7 @@ import pyglet
 from pyglet.math import Mat4
 
 import app.consts as consts
+from view.camera import Camera
 
 
 def normalize_screen_coordinates(x, y, screen_width=consts.WINDOW_WIDTH, screen_height=consts.WINDOW_HEIGHT) \
@@ -26,3 +27,9 @@ def get_opengl_matrix(matrix_type: int) -> Mat4:
     matrix = (pyglet.gl.GLfloat * 16)()
     pyglet.gl.glGetFloatv(matrix_type, matrix)
     return Mat4(matrix)
+
+
+def screen_to_world_coordinates(camera: Camera, x: float, y: float) -> tuple[float, float]:
+    inverse_transform = ~(camera.get_transformation_matrix() @ get_opengl_matrix(pyglet.gl.GL_PROJECTION_MATRIX))
+    *mouse, _, _ = inverse_transform @ pyglet.math.Vec4(*normalize_screen_coordinates(x, y), 1.0, 1.0)
+    return mouse

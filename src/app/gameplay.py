@@ -5,7 +5,7 @@ import pyglet
 import view.camera as camera
 import view.world as world
 from app.fsm_state import FsmState
-from utils.opengl import get_opengl_matrix, normalize_screen_coordinates
+from utils.opengl import screen_to_world_coordinates
 
 
 class Gameplay(FsmState):
@@ -39,6 +39,9 @@ class Gameplay(FsmState):
             self.camera.scroll(0, -SCROLL_AMOUNT)
 
         self.world.update(delta_ms)
+        mouse = screen_to_world_coordinates(self.camera, self.fsm.window._mouse_x, self.fsm.window._mouse_y)
+        self.world.update_mouse_hexagon(*mouse)
+
 
     def on_key_press(self, symbol, modifiers):
         if symbol == pyglet.window.key.ESCAPE:
@@ -51,10 +54,14 @@ class Gameplay(FsmState):
     def on_mouse_press(self, x, y, button, modifiers):
         # Note that camera transform operates on GL_MODELVIEW_MATRIX, which is an identity matrix except when we modify it using with camera.transform()
         # Thus, the following method encapsulates both MODELVIEW_MATRIX and CAMERA_MATRIX
-        inverse_transform = ~(self.camera.get_transformation_matrix() @ get_opengl_matrix(pyglet.gl.GL_PROJECTION_MATRIX))
-        *mouse, _, _ = inverse_transform @ pyglet.math.Vec4(*normalize_screen_coordinates(x, y), 1.0, 1.0)
+        mouse = screen_to_world_coordinates(self.camera, x, y)
         print('Mouse position in world =', mouse)
         return True
+
+    def on_mouse_motion(self, x, y, dx, dy):
+        current_x, current_y = x + dx, y + dy
+        mouse = screen_to_world_coordinates(self.camera, current_x, current_y)
+        self.world.update_mouse_hexagon(*mouse)
 
     def draw(self):
         with self.camera.camera_transformation():
@@ -64,3 +71,4 @@ class Gameplay(FsmState):
 Gameplay.register_event_type("on_key_press")
 Gameplay.register_event_type("on_mouse_scroll")
 Gameplay.register_event_type("on_mouse_press")
+Gameplay.register_event_type("on_mouse_motion")

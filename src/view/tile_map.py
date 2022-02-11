@@ -9,7 +9,6 @@ from model.hexagon import Hexagon, HexPlot
 #   work on realising how to set it properly
 #   Also note that the hex images are not a perfect hexagon yet
 HEX_WIDTH, HEX_HEIGHT = 63, 74
-
 _hexagon_plotter = HexPlot(HEX_WIDTH, HEX_HEIGHT)
 
 
