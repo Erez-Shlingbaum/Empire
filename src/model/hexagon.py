@@ -149,8 +149,16 @@ class Hexagon:
         ]
 
 
+def compute_width_height(size: float) -> tuple[float, float]:
+    """
+    :param size: distance from middle of hex to a corner
+    :return: hexagon width, height
+    """
+    return 2.0 * size, sqrt(3.0) * size
+
+
 # Flat top pixel conversion
-def to_pixel(hexagon: 'Hexagon', size: float = consts.HEX_SIZE) -> Vec2:
+def to_pixel(hexagon: 'Hexagon', size: float = None) -> Vec2:
     """
     Convert Hexagonal coordinate to pixel coordinate
     """
@@ -158,10 +166,12 @@ def to_pixel(hexagon: 'Hexagon', size: float = consts.HEX_SIZE) -> Vec2:
         (3.0 / 2.0, 0.0,
          sqrt(3.0) / 2.0, sqrt(3.0))
     )
+    if size is None:
+        size = consts.HEX_SIZE
     return (_TO_PIXEL_MATRIX @ Vec2(hexagon.q, hexagon.r)).scale(size)
 
 
-def from_pixel(x, y, size: float = consts.HEX_SIZE):
+def from_pixel(x, y, size: float = None):
     """
     Convert pixel coordinate to hexagonal coordinate
     """
@@ -169,6 +179,8 @@ def from_pixel(x, y, size: float = consts.HEX_SIZE):
         (2.0 / 3.0, 0.0,
          -1.0 / 3.0, sqrt(3.0) / 3.0)
     )
-    x, y = x - 64, y - 64
+    if size is None:
+        size = consts.HEX_SIZE
+    x, y = map(lambda num: num - consts.HEX_SIZE, (x, y))
     q, r = (_FROM_PIXEL_MATRIX @ Vec2(x, y)).scale(1.0 / size)
     return Hexagon(q, r).round()
