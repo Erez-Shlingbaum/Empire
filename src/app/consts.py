@@ -1,8 +1,6 @@
 import pyglet
 
 # Colors
-from model.hexagon import compute_width_height
-
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
 
@@ -15,7 +13,6 @@ SPLASH_IMAGE_PATH = "assets/splash.png"
 # Hex grid
 # size -> distance from middle of hex to a corner
 HEX_SIZE = 64.0
-HEX_WIDTH, HEX_HEIGHT = compute_width_height(HEX_SIZE)
 
 # Game config
 GAME_TITLE = 'Empire'

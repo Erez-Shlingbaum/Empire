@@ -9,7 +9,6 @@ from math import sqrt
 
 from pyglet.math import Vec2
 
-from app import consts
 from utils.math import Mat2
 
 
@@ -149,38 +148,51 @@ class Hexagon:
         ]
 
 
-def compute_width_height(size: float) -> tuple[float, float]:
-    """
-    :param size: distance from middle of hex to a corner
-    :return: hexagon width, height
-    """
-    return 2.0 * size, sqrt(3.0) * size
+class HexagonPlotter:
+    def __init__(self, size: float):
+        """
+        :param size: distance from middle of hex to a corner
+        """
+        self._size = size
+        self._width, self._height = self.calculate_width_height(size)
 
+    @property
+    def size(self):
+        return self._size
 
-# Flat top pixel conversion
-def to_pixel(hexagon: 'Hexagon', size: float = None) -> Vec2:
-    """
-    Convert Hexagonal coordinate to pixel coordinate
-    """
-    _TO_PIXEL_MATRIX = Mat2(
-        (3.0 / 2.0, 0.0,
-         sqrt(3.0) / 2.0, sqrt(3.0))
-    )
-    if size is None:
-        size = consts.HEX_SIZE
-    return (_TO_PIXEL_MATRIX @ Vec2(hexagon.q, hexagon.r)).scale(size)
+    @property
+    def width(self):
+        return self._width
 
+    @property
+    def height(self):
+        return self._height
 
-def from_pixel(x, y, size: float = None):
-    """
-    Convert pixel coordinate to hexagonal coordinate
-    """
-    _FROM_PIXEL_MATRIX = Mat2(
-        (2.0 / 3.0, 0.0,
-         -1.0 / 3.0, sqrt(3.0) / 3.0)
-    )
-    if size is None:
-        size = consts.HEX_SIZE
-    x, y = map(lambda num: num - consts.HEX_SIZE, (x, y))
-    q, r = (_FROM_PIXEL_MATRIX @ Vec2(x, y)).scale(1.0 / size)
-    return Hexagon(q, r).round()
+    @staticmethod
+    def calculate_width_height(size) -> tuple[float, float]:
+        """
+        :return: hexagon width, height
+        """
+        return 2.0 * size, sqrt(3.0) * size
+
+    def hex_to_world(self, hexagon: Hexagon) -> Vec2:
+        """
+        Convert hexagonal coordinate to world coordinate
+        """
+        _TO_PIXEL_MATRIX = Mat2(
+            (3.0 / 2.0, 0.0,
+             sqrt(3.0) / 2.0, sqrt(3.0))
+        )
+        return (_TO_PIXEL_MATRIX @ Vec2(hexagon.q, hexagon.r)).scale(self._size)
+
+    def world_to_hex(self, x, y) -> Hexagon:
+        """
+        Convert world coordinate to hexagonal coordinate
+        """
+        _FROM_PIXEL_MATRIX = Mat2(
+            (2.0 / 3.0, 0.0,
+             -1.0 / 3.0, sqrt(3.0) / 3.0)
+        )
+
+        q, r = (_FROM_PIXEL_MATRIX @ Vec2(x, y)).scale(1.0 / self._size)
+        return Hexagon(q, r).round()

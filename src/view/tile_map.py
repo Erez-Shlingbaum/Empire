@@ -3,8 +3,10 @@ from typing import List
 
 import pyglet
 
-import model
-from model.hexagon import Hexagon
+from app import consts
+from model.hexagon import Hexagon, HexagonPlotter
+
+hexagon_plotter = HexagonPlotter(consts.HEX_SIZE)
 
 
 class TileType(enum.IntEnum):
@@ -18,7 +20,7 @@ class Tile(pyglet.sprite.Sprite):
         super().__init__(image)
         self.hexagon = hexagon
         self.tile_type = tile_type
-        self.position = model.hexagon.to_pixel(hexagon)
+        self.position = hexagon_plotter.hex_to_world(hexagon)
 
 
 class TileMap(pyglet.graphics.Batch):
