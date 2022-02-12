@@ -50,6 +50,7 @@ class SplashScreen(FsmState):
 
     def on_key_press(self, symbol, modifiers):
         self._finish_splash()
+        return True
 
 
 SplashScreen.register_event_type("on_key_press")

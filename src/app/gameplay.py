@@ -5,7 +5,9 @@ import pyglet
 import view.camera as camera
 import view.world as world
 from app.fsm_state import FsmState
-from utils.opengl import get_opengl_matrix, normalize_screen_coordinates
+from utils.opengl import screen_to_world_coordinates
+from view import tile_map
+from view.tile_map import TileType, Tile
 
 
 class Gameplay(FsmState):
@@ -38,22 +40,44 @@ class Gameplay(FsmState):
         if self.keys[pyglet.window.key.S]:
             self.camera.scroll(0, -SCROLL_AMOUNT)
 
+        world_x, world_y = screen_to_world_coordinates(self.camera, self.fsm.window._mouse_x, self.fsm.window._mouse_y)
+        self.world.mouse_hexagon = (world_x, world_y)
         self.world.update(delta_ms)
 
     def on_key_press(self, symbol, modifiers):
         if symbol == pyglet.window.key.ESCAPE:
             self.fsm.pop()
+        return True
 
     def on_mouse_scroll(self, x, y, scroll_x, scroll_y):
         # This is a good amount, not too much, not too little
         self.camera.zoom_level += math.copysign(0.03, scroll_y)
+        return True
 
     def on_mouse_press(self, x, y, button, modifiers):
         # Note that camera transform operates on GL_MODELVIEW_MATRIX, which is an identity matrix except when we modify it using with camera.transform()
         # Thus, the following method encapsulates both MODELVIEW_MATRIX and CAMERA_MATRIX
-        inverse_transform = ~(self.camera.get_transformation_matrix() @ get_opengl_matrix(pyglet.gl.GL_PROJECTION_MATRIX))
-        *mouse, _, _ = inverse_transform @ pyglet.math.Vec4(*normalize_screen_coordinates(x, y), 1.0, 1.0)
-        print('Mouse position in world =', mouse)
+        mouse = screen_to_world_coordinates(self.camera, x, y)
+        self.world.mouse_hexagon = mouse
+        print('Mouse position in world =', mouse, 'Hexagon =', self.world.mouse_hexagon)
+
+        for tile in self.world.tile_map.tiles:
+            if tile.hexagon == self.world.mouse_hexagon:
+                if tile.tile_type == tile_map.TileType.Water:
+                    tile.image = self.world.grass_image
+                    tile.tile_type = tile_map.TileType.Grass
+                    break
+                else:
+                    tile.image = self.world.water_image
+                    tile.tile_type = tile_map.TileType.Water
+                    break
+        else:
+            # TODO: convert tiles to a set
+            tile = Tile(self.world.grass_image, TileType.Grass, self.world.mouse_hexagon)
+            self.world.tile_map.tiles.append(tile)
+            tile.batch = self.world.tile_map
+
+
         return True
 
     def draw(self):

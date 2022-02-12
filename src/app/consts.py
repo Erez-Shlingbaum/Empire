@@ -7,8 +7,12 @@ WHITE = (255, 255, 255)
 # Images
 WATER_IMAGE_PATH = 'assets/water.png'
 GRASS_IMAGE_PATH = 'assets/grass.png'
-
+OUTLINE_IMAGE_PATH = 'assets/outline.png'
 SPLASH_IMAGE_PATH = "assets/splash.png"
+
+# Hex grid
+# size -> distance from middle of hex to a corner
+HEX_SIZE = 64.0
 
 # Game config
 GAME_TITLE = 'Empire'
@@ -28,5 +32,4 @@ else:
 # Other
 DEFAULT_COLOR_KEY = WHITE
 
-
-SPLASH_DURATION_SEC = 5
+SPLASH_DURATION_SEC = 3
