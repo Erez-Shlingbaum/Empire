@@ -44,6 +44,7 @@ class MainMenu(FsmState):
         if self._exit_label.rect.contains(x, y):
             self.fsm.pop()
             self.fsm.window.dispatch_event('on_close')
+        return True
 
     def update(self, delta_ms: float):
         pass
