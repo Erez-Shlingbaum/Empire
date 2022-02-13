@@ -7,7 +7,7 @@ from view.camera import Camera
 
 def test_camera_math():
     camera = Camera(1.0, 5.0)
-    start_matrix = camera.get_transformation_matrix()
+    start_matrix = camera.transformation_matrix
 
     camera.scroll(1000, 1000)
     camera.zoom_level = camera.max_zoom
@@ -15,7 +15,7 @@ def test_camera_math():
     camera.scroll(-1000, -1000)
     camera.zoom_level = 1.0
 
-    assert start_matrix == camera.get_transformation_matrix()
+    assert start_matrix == camera.transformation_matrix
 
 
 @pytest.mark.skip(reason='Not really relevant now')
