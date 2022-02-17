@@ -46,7 +46,7 @@ class Gameplay(FsmState):
 
     def on_key_press(self, symbol, modifiers):
         if symbol == pyglet.window.key.ESCAPE:
-            self.fsm.pop()
+            self.fsm.window.dispatch_event('on_close')
         return True
 
     def on_mouse_scroll(self, x, y, scroll_x, scroll_y):
