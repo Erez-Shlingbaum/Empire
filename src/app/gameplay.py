@@ -31,14 +31,15 @@ class Gameplay(FsmState):
 
     def update(self, delta_ms: float):
         SCROLL_AMOUNT = 10
-        if self.keys[pyglet.window.key.A]:
-            self.camera.scroll(-SCROLL_AMOUNT, 0)
-        if self.keys[pyglet.window.key.W]:
-            self.camera.scroll(0, SCROLL_AMOUNT)
-        if self.keys[pyglet.window.key.D]:
-            self.camera.scroll(SCROLL_AMOUNT, 0)
-        if self.keys[pyglet.window.key.S]:
-            self.camera.scroll(0, -SCROLL_AMOUNT)
+        if not self.keys[pyglet.window.key.LCTRL]:
+            if self.keys[pyglet.window.key.A]:
+                self.camera.scroll(-SCROLL_AMOUNT, 0)
+            if self.keys[pyglet.window.key.W]:
+                self.camera.scroll(0, SCROLL_AMOUNT)
+            if self.keys[pyglet.window.key.D]:
+                self.camera.scroll(SCROLL_AMOUNT, 0)
+            if self.keys[pyglet.window.key.S]:
+                self.camera.scroll(0, -SCROLL_AMOUNT)
 
         world_x, world_y = screen_to_world_coordinates(self.camera, self.fsm.window._mouse_x, self.fsm.window._mouse_y)
         self.world.mouse_hexagon = (world_x, world_y)
@@ -47,6 +48,10 @@ class Gameplay(FsmState):
     def on_key_press(self, symbol, modifiers):
         if symbol == pyglet.window.key.ESCAPE:
             self.fsm.pop()
+        elif (modifiers & pyglet.window.key.MOD_CTRL) and symbol == pyglet.window.key.S:
+            self.world.save_world('map.txt')
+        elif (modifiers & pyglet.window.key.MOD_CTRL) and symbol == pyglet.window.key.L:
+            self.world.load_world('map.txt')
         return True
 
     def on_mouse_scroll(self, x, y, scroll_x, scroll_y):
@@ -76,7 +81,6 @@ class Gameplay(FsmState):
             tile = Tile(self.world.grass_image, TileType.Grass, self.world.mouse_hexagon)
             self.world.tile_map.tiles.append(tile)
             tile.batch = self.world.tile_map
-
 
         return True
 

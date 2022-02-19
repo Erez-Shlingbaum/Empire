@@ -27,7 +27,8 @@ class World:
         # TODO: refactor this to load from a map generator or from a file
         hexagons = [Hexagon(r, q) for r in range(15) for q in range(-5, 10)]
         self.tile_map = TileMap(consts.WINDOW_WIDTH, consts.WINDOW_HEIGHT, [
-            Tile(*random.choice([(self.grass_image, TileType.Grass), (self.water_image, TileType.Water)]), x) for x in hexagons
+            Tile(*random.choice([(self.grass_image, TileType.Grass), (self.water_image, TileType.Water)]), x) for x in
+            hexagons
         ])
 
         self._mouse_hexagon = Hexagon(0, 0)
@@ -49,6 +50,12 @@ class World:
 
     def update(self, delta_ms: float):
         pass
+
+    def load_world(self, path: str):
+        self.tile_map = TileMap.load_tile_map(path)
+
+    def save_world(self, path: str):
+        self.tile_map.save_tile_map(path)
 
     def draw(self):
         self.tile_map.draw()
