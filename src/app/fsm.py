@@ -33,7 +33,6 @@ class Fsm:
     def top(self):
         if len(self._stack) == 0:
             raise ValueError("state machine is empty")
-
         return self._stack[-1]
 
     def __getattr__(self, name: str):
