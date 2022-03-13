@@ -48,6 +48,7 @@ class Gameplay(FsmState):
     def on_key_press(self, symbol, modifiers):
         if symbol == pyglet.window.key.ESCAPE:
             self.fsm.pop()
+            self.fsm.window.dispatch_event('on_close')
         elif (modifiers & pyglet.window.key.MOD_CTRL) and symbol == pyglet.window.key.S:
             self.world.save_world('map.txt')
         elif (modifiers & pyglet.window.key.MOD_CTRL) and symbol == pyglet.window.key.L:
